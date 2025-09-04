@@ -10,6 +10,8 @@ from cinema.models import (
 
 
 class CinemaHallSerializer(serializers.ModelSerializer):
+    capacity = serializers.IntegerField(read_only=True)
+
     class Meta:
         model = CinemaHall
         fields = ["id", "name", "rows", "seats_in_row", "capacity"]
@@ -41,7 +43,7 @@ class MovieListSerializer(MovieSerializer):
     )
     actors = serializers.SerializerMethodField()
 
-    def get_actors(self, obj):
+    def get_actors(self, obj) -> list[str]:
         return [actor.full_name for actor in obj.actors.all()]
 
 
